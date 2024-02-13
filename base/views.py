@@ -14,7 +14,7 @@ def random_url(original_url):
     hash_object = hashlib.md5(original_url.encode())
     hash_str = hash_object.hexdigest()
 
-    short_url = hash_str[:7]
+    short_url = hash_str[:6]
     return short_url
 
 class Register(APIView):
@@ -37,7 +37,7 @@ class Register(APIView):
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ShortURL(APIView):
+class UserURL(APIView):
     
     permission_classes = [IsAuthenticated]
     
@@ -63,3 +63,30 @@ class ShortURL(APIView):
         
         serializer = ShortLinkSerializer(short_link, many = False)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def put(self, request):
+        new_url = request.data.get('new_url')
+        original_short_url = request.data.get('original_short_url')
+        
+        if not new_url:
+            return Response({'detail': 'missing short_url parameter'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        short_link = get_object_or_404(ShortLink, short_url = original_short_url, user = request.user)
+        
+        short_link.original_url = new_url
+        short_link.save()
+        
+        serializer = ShortLinkSerializer(short_link, many = False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class ShortURL(APIView):
+    
+    def get(self, request, short_url):
+        
+        short_link = get_object_or_404(ShortLink, short_url = short_url)
+        serializer = ShortLinkSerializer(short_link, many = False)
+        
+        return Response(serializer.data, status = status.HTTP_200_OK)
+        
+        

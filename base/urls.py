@@ -13,10 +13,3 @@ urlpatterns = [
     path('s/<str:short_url>', view = ShortURL.as_view())
 ]
 
-
-# 1) get short urls (publico)  LISTO
-# 2) post short urls (privado y publico?) LISTO
-# 3) get original url (publico) s/shortened-url/ LISTO
-
-# 6) dashboard urls para modificar o ver estadisticas (privado). Se usa el get 1)
- 

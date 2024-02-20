@@ -6,4 +6,12 @@
   body {
     @apply text-[#f2f3f5];
   }
+
+  .input {
+    @apply bg-[#02040A] p-2 rounded-md mt-2 outline-none;
+  }
+
+  .submit {
+    @apply bg-green-700 rounded-sm py-2 hover:bg-green-600 active:bg-green-700;
+  }
 }

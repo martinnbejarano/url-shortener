@@ -1,6 +1,6 @@
 import { useAuthStore } from "../store/auth";
 import axios from "axios";
-import * as jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -24,7 +24,7 @@ authAxios.interceptors.request.use(async (request) => {
     Authorization: `Bearer ${token}`,
   };
 
-  const tokenDecoded = jwt_decode(token);
+  const tokenDecoded = jwtDecode(token);
   const expiration = new Date(tokenDecoded.exp * 1000);
   const now = new Date();
   const fiveMin = 1000 * 60 * 5;

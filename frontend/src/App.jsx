@@ -4,11 +4,12 @@ import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
 import { LoginPage } from "./components/LoginPage";
 import { RegisterPage } from "./components/RegisterPage";
+import { Redirect } from "./components/Redirect";
 
 export default function App() {
   return (
     <Router>
-      <div className="bg-[#212121] min-h-screen">
+      <div className="bg-[#0E1117] min-h-screen">
         <Routes>
           <Route element={<Header />}>
             <Route index element={<Home />} />
@@ -16,6 +17,7 @@ export default function App() {
           </Route>
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          <Route path="/s/:slug" element={<Redirect />} />
         </Routes>
       </div>
     </Router>

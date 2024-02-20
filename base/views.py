@@ -39,8 +39,14 @@ class Register(APIView):
 
 class UserURL(APIView):
     
-    permission_classes = [IsAuthenticated]
-    
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            # No se requiere autenticación para el método POST
+            return []
+        else:
+            # Se requiere autenticación para los métodos GET y PUT
+            return [IsAuthenticated()]
+            
     def get(self, request):
 
         user = request.user      
@@ -51,7 +57,7 @@ class UserURL(APIView):
     
     def post(self, request):
         data = request.data
-        user = request.user
+        user = request.user if request.user.is_authenticated else None
         
         short_url = data.get('short_url') or random_url(data['original_url'])
         
@@ -83,10 +89,12 @@ class UserURL(APIView):
 class ShortURL(APIView):
     
     def get(self, request, short_url):
-        
-        short_link = get_object_or_404(ShortLink, short_url = short_url)
-        serializer = ShortLinkSerializer(short_link, many = False)
-        
-        return Response(serializer.data, status = status.HTTP_200_OK)
+        try:
+            short_link = get_object_or_404(ShortLink, short_url = short_url)
+            serializer = ShortLinkSerializer(short_link, many = False)
+            
+            return Response(serializer.data, status = status.HTTP_200_OK)
+        except ShortLink.DoesNotExist:
+            return Response({"detail": f"URL with {short_url} slug does not exist"})
         
         

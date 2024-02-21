@@ -41,6 +41,6 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     
 class ShortLink(models.Model):
     
-    short_url = models.CharField(max_length = 6)
-    original_url = models.CharField(max_length = 355)
+    short_url = models.CharField(max_length = 100, unique = True)
+    original_url = models.CharField(max_length = 355, blank = False, null = False)
     user = models.ForeignKey(MyUser, on_delete = models.SET_NULL, null = True, blank = True)

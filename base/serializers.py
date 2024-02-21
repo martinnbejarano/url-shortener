@@ -13,7 +13,7 @@ class ShortLinkSerializer(ModelSerializer):
     
     class Meta:
         model = ShortLink
-        fields = ['short_url', 'original_url']
+        fields = '__all__'
         
         
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):

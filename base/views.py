@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import APIView
@@ -61,15 +62,19 @@ class UserURL(APIView):
         
         short_url = data.get('short_url') or random_url(data['original_url'])
         
-        short_link = ShortLink.objects.create(
-            short_url = short_url,
-            original_url = data['original_url'],
-            user = user
-        )
+        try:
+            short_link = ShortLink.objects.create(
+                short_url=short_url,
+                original_url=data['original_url'],
+                user=user
+            )
+            
+            serializer = ShortLinkSerializer(short_link, many=False)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-        serializer = ShortLinkSerializer(short_link, many = False)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+        except IntegrityError:
+            return Response({"error": "Slug has already been chosen. Please enter another one"},
+                            status=status.HTTP_400_BAD_REQUEST)
     def put(self, request):
         new_url = request.data.get('new_url')
         original_short_url = request.data.get('original_short_url')

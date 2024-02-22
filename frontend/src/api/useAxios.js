@@ -15,7 +15,6 @@ export const axi = axios.create({
 
 export const authAxios = axios.create({
   baseURL,
-  withCredentials: true,
 });
 
 authAxios.interceptors.request.use(async (request) => {

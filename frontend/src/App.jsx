@@ -9,7 +9,7 @@ import { Redirect } from "./components/Redirect";
 export default function App() {
   return (
     <Router>
-      <div className="bg-[#0E1117] min-h-screen">
+      <div className="bg-[#0E1117] min-h-[100dvh]">
         <Routes>
           <Route element={<Header />}>
             <Route index element={<Home />} />

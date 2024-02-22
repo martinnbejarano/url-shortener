@@ -17,7 +17,6 @@ export const LoginPage = () => {
     mutationFn: () => loginRequest(username, password),
     onSuccess: (response) => {
       setToken(response.data.access, response.data.refresh);
-      toast.success("bien");
       navigate("/");
     },
     onError: () => {
@@ -31,11 +30,11 @@ export const LoginPage = () => {
   };
 
   return (
-    <main className="flex justify-center items-center h-screen">
+    <main className="flex min-h-screen items-center justify-center">
       <ToastContainer position="top-center" theme="dark" />
-      <section className="bg-[#161B22] border border-[#30363C] p-8 rounded-lg shadow-lg flex flex-col gap-8 ">
+      <section className="flex flex-col gap-8 rounded-lg border border-[#30363C] bg-[#161B22] p-8 shadow-lg ">
         <h1 className="text-xl">Sign in</h1>
-        <form onSubmit={handleForm} className="flex flex-col gap-8 w-[350px]">
+        <form onSubmit={handleForm} className="flex flex-col gap-8 md:w-96">
           <label htmlFor="username" className="flex flex-col">
             Username
             <input

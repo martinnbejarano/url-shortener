@@ -8,10 +8,16 @@
   }
 
   .input {
-    @apply bg-[#02040A] p-2 rounded-md mt-2 outline-none;
+    @apply mt-2 rounded-md bg-[#02040A] p-2 outline-none;
   }
 
   .submit {
-    @apply bg-green-700 rounded-sm py-2 hover:bg-green-600 active:bg-green-700;
+    @apply rounded-sm bg-green-700 py-2 hover:bg-green-600 active:bg-green-700;
+  }
+
+  .dash {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 }

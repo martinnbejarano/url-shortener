@@ -1,12 +1,13 @@
 import { CreateUrlCard } from "./CreateUrlCard";
 import { useAuthStore } from "../store/auth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getUrls } from "../api/urls";
 import { UrlCard } from "./UrlCard";
+import { useUrlsStore } from "../store/urls";
 
 export const Home = () => {
-  const [urls, setUrls] = useState();
   const { isAuth } = useAuthStore();
+  const { urls, setUrls } = useUrlsStore();
 
   useEffect(() => {
     const fetchUrls = async () => {
@@ -21,10 +22,10 @@ export const Home = () => {
     };
 
     fetchUrls();
-  }, [isAuth]);
+  }, [isAuth, setUrls]);
 
   return (
-    <main className="grid justify-center gap-8 p-10 sm:grid-cols-1 sm:justify-center md:grid-cols-[1.5fr,2.5fr]">
+    <main className="grid justify-center p-10 sm:grid-cols-1 md:grid-cols-[1.5fr,2.5fr]">
       <CreateUrlCard />
 
       <div className="py-10">

@@ -90,6 +90,14 @@ class UserURL(APIView):
         serializer = ShortLinkSerializer(short_link, many = False)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+    def delete(self, request):
+        short_url = request.data.get('short_url')
+        print(request)
+        print(short_url)
+
+        short_link = get_object_or_404(ShortLink, short_url = short_url, user = request.user)
+        short_link.delete()
+        return Response({'detail': 'short link deleted successfully'}, status=status.HTTP_200_OK)
 
 class ShortURL(APIView):
     
